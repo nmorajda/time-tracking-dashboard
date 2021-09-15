@@ -21,7 +21,7 @@ const renderCard = data => {
   const type = title.replace(' ', '-').toLowerCase();
 
   const html = `
-          <div class="card ${type}" style="background-image: url(/images/icon-${type}.svg)">
+          <div class="card ${type}" style="background-image: url(images/icon-${type}.svg)">
             <div class="card-wrapper">
               <div class="card__header">
                 <span>${title} </span>
