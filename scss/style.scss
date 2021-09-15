@@ -1,0 +1,336 @@
+$breakpoint: 980px;
+
+:root {
+    --blue: hsl(246, 80%, 60%);
+    --light-red : hsl(15, 100%, 70%); // work
+    --soft-blue: hsl(195, 74%, 62%); // (play)
+    --light-red2: hsl(348, 100%, 68%); // (play)
+    --lime-green: hsl(145, 58%, 55%); // (exercise)
+    --violet: hsl(264, 64%, 52%); // (social)
+    --soft-orange: hsl(43, 84%, 65%); // (self care)
+
+    --very-dark-blue: hsl(226, 43%, 10%);
+    --dark-blue: hsl(235, 46%, 20%);
+    --desaturated-blue: hsl(235, 45%, 61%);
+    --pale-blue: hsl(236, 100%, 87%);
+
+    --very-light-blue: hsl(225, 63%, 87%);
+
+    --font-size-primary: 18px; // (card titles e.g. Work, Play)
+
+    --font-family-primary: 'Rubik', sans-serif;
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+
+    --body-bg: var(--very-dark-blue);
+    --text-color: #fff;
+    --card-bg: var(--dark-blue);
+
+    --base-space: 3.2rem;
+    --base-border-radius: 1.6rem;
+}
+
+.light {
+    // maybe sometimes
+    --body-bg: var(--very-light-blue);
+    --text-color: var(--very-dark-blue);
+    --card-bg: var(--light-blue);
+}
+
+.work {
+    --card-bg: var(--light-red);
+}
+
+.play {
+    --card-bg: var(--soft-blue);
+}
+
+.study {
+    --card-bg: var(--light-red2);
+}
+
+.exercise {
+    --card-bg: var(--lime-green);
+}
+
+.social {
+    --card-bg: var(--violet);
+}
+
+.self-care {
+    --card-bg: var(--soft-orange);
+}
+
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
+
+*, *:after, *:before {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-family: var(--font-family-primary);
+    font-size: var(--font-size-primary);
+    color: var(--text-color);
+    background-color: var(--body-bg);
+
+}
+
+h1 {
+    font-size: 2.2rem;
+    font-weight: var(--font-weight-light);
+}
+
+ul, ol {
+    list-style: none;
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+a {
+    text-decoration: none;
+    color: var(--desaturated-blue);
+
+    &:hover,
+    &:focus {
+        color: var(--very-light-blue);
+    }
+
+    &.is-active {
+        color: white;
+    }
+}
+
+.main {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    max-width: 34.5rem;
+    margin: 0 auto;
+    padding: 6.4rem 0;
+
+    @media (min-width: $breakpoint)
+    {
+        max-width: 96rem;
+    }
+
+    @media (min-width: 1440px)
+    {
+        max-width: 126rem;
+    }
+}
+
+.dashboard {
+    @media (min-width: $breakpoint)
+    {
+        display: flex;
+        gap: var(--base-space)
+    }
+
+    .header {
+        @media (min-width: $breakpoint)
+        {
+            flex: 1
+        }
+    }
+
+    .cards {
+        @media (min-width: $breakpoint)
+        {
+            flex: 2
+        }
+
+        @media (min-width: 1440px)
+        {
+            flex: 3;
+        }
+    }
+}
+
+.box {
+    margin-bottom: var(--base-space);
+    background-color: var(--dark-blue);
+    border-radius: var(--base-border-radius);
+    overflow: hidden;
+
+    @media (min-width: $breakpoint)
+    {
+        min-height: 100%;
+        margin-bottom: 0;
+    }
+    
+    &__header {
+        padding: var(--base-space);
+        display: flex;
+        gap: var(--base-space);
+        align-items: center;
+        background-color: var(--blue);
+        border-bottom-left-radius: var(--base-border-radius);
+        border-bottom-right-radius: var(--base-border-radius);
+
+        @media (min-width: $breakpoint)
+        {
+            padding-bottom: 6.4rem;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+        }
+        
+        img {
+            max-width: 10.2rem;
+            padding: 2px;
+            border-radius: 50%;
+            background-color: white;
+        }
+    }
+
+    &__info {
+        &-label {
+            margin-bottom: .4rem;
+            font-size: 1.6rem;
+            color: var(--very-light-blue)
+        }
+
+        &-name {
+            @media (min-width: $breakpoint)
+            {
+                font-size: 3.6rem;
+            }
+        }
+    }
+
+    &__body {
+        padding: var(--base-space);
+        ul {
+            
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            @media (min-width: $breakpoint)
+            {
+
+                flex-direction: column;
+                gap: calc(var(--base-space)/2);
+                justify-content: space-between;
+                align-items: flex-start;
+            }
+        }
+    }
+}
+
+.cards {
+    display: flex;
+    flex-direction: column;
+    gap: 3.2rem;
+
+
+    @media (min-width:$breakpoint)
+    {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .card {
+        height: 23rem;
+        background-color: var(--card-bg);
+        border-radius: var(--base-border-radius);
+        background-repeat: no-repeat;
+        background-position: 90% -10%;
+        cursor: pointer;
+        overflow: hidden;
+        transition: transform .3s ease-in-out;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        
+
+
+        @media (min-width: $breakpoint)
+        {
+            flex: 1 1 30%;
+        }
+
+        &:hover {
+            transform: scale(1.05);
+
+            background-size: 30%;
+            .card-wrapper {
+                background-color: var(--blue);
+            }
+        }
+
+        &-wrapper {
+            padding: var(--base-space);
+            background-color: var(--dark-blue);
+            border-top-right-radius: var(--base-border-radius);
+            border-top-left-radius: var(--base-border-radius);
+            transition: all .3s ease-in-out;
+        }
+
+        &__header {
+            margin-bottom: 1.6rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            span {
+                font-size: 1.8rem;
+                font-weight: var(--font-weight-medium);
+            }
+
+            img {
+                width: 21px;
+                height: 5px;
+            }
+        }
+
+        &__body {
+            h2 {
+                margin-bottom: 1.2rem;
+                font-size: 4.8rem;
+                font-weight: var(--font-weight-light);
+            }
+
+            p {
+                color: var(--pale-blue)
+            }
+        }
+    }
+}
+
+.footer {
+    padding: var(--base-space) 0;
+
+    @media (min-width: $breakpoint)
+    {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+    }
+
+    .attribution {
+        font-size: 1.6rem;
+
+        a {
+            color: var(--desaturated-blue);
+        }
+    }
+}
+
+
