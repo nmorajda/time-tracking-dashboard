@@ -50,10 +50,16 @@ const renderData = () => {
 };
 
 (async function get() {
-  const response = await fetch('../data.json');
-  const data = await response.json();
+  try {
+    const response = await fetch(
+      'https://nmorajda.github.io/time-tracking-dashboard/data.json'
+    );
+    const data = await response.json();
 
-  updateState({ data });
+    updateState({ data });
+  } catch (error) {
+    console.log(error);
+  }
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
