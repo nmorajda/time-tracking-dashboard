@@ -1,0 +1,44 @@
+.theme-switch {
+    --width: 6.4rem;
+    --height: 3.2rem;
+    --space: 4px;
+    --size: calc(var(--height) - 2 * var(--space));
+
+    position: absolute;
+    top: var(--base-space);
+    right: 0;
+    display: flex;
+    align-items: center;
+    z-index:999;
+    display: inline-block;
+    width: var(--width);
+    height: var(--height);
+    &.is-active {
+        .theme-switch__slider::before {
+
+            transform: translateX(calc(var(--width) - (var(--size) + 2 * var(--space))))
+        }
+    }
+    &__slider {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        cursor: pointer;
+        background-color: var(--desaturated-blue);
+        border-radius: 100vh;
+
+        &:before {
+            content: "";
+            position: absolute;
+            bottom: var(--space);
+            left: var(--space);
+            width: calc(var(--height) - 2 * var(--space));
+            height: calc(var(--height) - 2 * var(--space));
+            background-color: var(--body-bg);
+            border-radius: 50%;
+            transition: all 0.4s ease-in-out;
+        }
+    }
+}
