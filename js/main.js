@@ -164,6 +164,73 @@ const renderCards = () => {
   });
 };
 
+/*
+@param {Function} func the function to debounce
+@param {number} [wait = 0] the number of milliseconds to delay
+*/
+const debounce = (func, wait = 1000) => {
+  if (typeof func !== 'function') {
+    throw new TypeError('Expected a function');
+  }
+
+  let timerId;
+
+  return (...args) => {
+    if (timerId) {
+      clearTimeout(timerId);
+    }
+
+    timerId = setTimeout(() => {
+      func.apply(null, args);
+    }, wait);
+  };
+};
+
+function inputHandler(e) {
+  const card = e.target.closest(DOMselectors.card)
+    ? e.target.closest(DOMselectors.card)
+    : null;
+
+  if (card) {
+    const id = card.dataset.id;
+
+    const elemInput = e.target;
+    const valInput = +elemInput.value;
+
+    if (valInput > 24) {
+      alert('The maximum value is 24hrs.');
+      elemInput.value = '';
+      return;
+    }
+
+    if (valInput < 1) {
+      alert('The minimum value is 1hrs.');
+      elemInput.value = '';
+      return;
+    }
+
+    const elemCurrentTime = card.querySelector(
+      `${DOMselectors.card}__current-time`
+    );
+
+    const valCurrentTime = +elemCurrentTime.textContent.replace('hrs', '');
+
+    // Update state without render cards
+
+    const { timeframes } = state.data[id];
+
+    for (const key in timeframes) {
+      if (Object.hasOwnProperty.call(timeframes, key)) {
+        timeframes[key].current += valInput;
+      }
+    }
+
+    // Update UI
+    elemCurrentTime.textContent = valCurrentTime + valInput + 'hrs';
+    elemInput.value = '';
+  }
+}
+
 function themeSwitchHandler() {
   document.body.classList.toggle('light');
 
@@ -178,42 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // event delegation
   // TODO dodac aktualizacje w momencie nacisniecia klawisza
-  elemCardsContainer.addEventListener('change', e => {
-    const card = e.target.closest(DOMselectors.card)
-      ? e.target.closest(DOMselectors.card)
-      : null;
-
-    if (card) {
-      const id = card.dataset.id;
-
-      const elemInput = e.target;
-      const valInput = +elemInput.value;
-
-      const elemCurrentTime = card.querySelector(
-        `${DOMselectors.card}__current-time`
-      );
-
-      const valCurrentTime = +elemCurrentTime.textContent.replace('hrs', '');
-
-      // TODO
-      // Update state without render cards
-      const { timeframes } = state.data[id];
-      for (const key in timeframes) {
-        if (Object.hasOwnProperty.call(timeframes, key)) {
-          timeframes[key].current += valInput;
-        }
-      }
-      // for (const key in ({ timeframes } = state.data[id])) {
-      //   if (timeframes.hasOwnProperty.call(timeframes, key)) {
-      //     timeframes[key].current += valCurrentTime + valInput;
-      //   }
-      // }
-
-      // Update UI
-      elemCurrentTime.textContent = valCurrentTime + valInput + 'hrs';
-      elemInput.value = '';
-    }
-  });
+  elemCardsContainer.addEventListener('input', debounce(inputHandler, 600));
 
   elemCardsContainer.addEventListener('mouseover', e => {
     const card = e.target.closest(DOMselectors.card)
